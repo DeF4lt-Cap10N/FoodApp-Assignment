@@ -5,25 +5,24 @@ const BarcodeSearch = ({ onBarcodeSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onBarcodeSearch(barcode);
+    if (barcode.trim()) onBarcodeSearch(barcode);
     setBarcode("");
   };
-  
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
+    <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
       <input
         type="text"
-        className="w-full p-2 border rounded-md"
-        placeholder="Enter Barcode (e.g., 737628064502)"
         value={barcode}
         onChange={(e) => setBarcode(e.target.value)}
+        placeholder="Enter Barcode (e.g., 737628064502)"
+        className="w-full rounded-md border p-2"
       />
       <button
         type="submit"
-        className="bg-green-600 text-white px-4 py-2 rounded-md"
+        className="rounded-md outline-none border-none bg-cyan-500 px-4 py-2 text-white hover:bg-cyan-700 transition"
       >
-        Search Barcode
+        Barcode
       </button>
     </form>
   );

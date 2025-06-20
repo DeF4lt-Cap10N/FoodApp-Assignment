@@ -5,21 +5,21 @@ const SearchBar = ({ onSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(query);
+    if (query.trim()) onSearch(query);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
+    <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
       <input
         type="text"
-        className="w-full p-2 border rounded-md"
-        placeholder="Search for food..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search for food..."
+        className="w-full rounded-md border p-2"
       />
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded-md"
+        className="rounded-md bg-cyan-500 px-4 py-2 mr-5 text-white hover:bg-cyan-700 transition"
       >
         Search
       </button>
