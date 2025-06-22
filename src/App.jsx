@@ -60,24 +60,18 @@ function App() {
   };
 
   // Category 
-  const fetchByCategory = async (categoryId) => {
-    const category = categoryId.replace("en:", "");
-    try {
-      setLoader(true);
-      const res = await axios.get(
-        `https://thingproxy.freeboard.io/fetch/https://world.openfoodfacts.org/category/${category}.json`
-      );
-      setProducts(res.data.products);
-      setHasMore(false); 
-    } catch (error) {
-      console.error("Error fetching products by category:", error);
-    }
-    setLoader(false);
-  };
-
-  useEffect(() => {
-    fetchData(); 
-  }, []);
+ const fetchByCategory = async (categoryId) => {
+  const category = categoryId.replace("en:", "");
+  try {
+    setLoader(true);
+    const res = await axios.get(`/api/productsByCategory?category=${category}`);
+    setProducts(res.data.products);
+    setHasMore(false); 
+  } catch (error) {
+    console.error("Error fetching products by category:", error);
+  }
+  setLoader(false);
+};
 
   
   const observer = useRef();

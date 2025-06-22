@@ -8,9 +8,7 @@ const CategoryFilter = ({ onSelectCategory }) => {
 useEffect(() => {
   const fetchCategories = async () => {
     try {
-      const res = await axios.get(
-        "https://thingproxy.freeboard.io/fetch/https://world.openfoodfacts.org/categories.json"
-      );
+      const res = await axios.get("/api/categories");
       setCategories(res.data.tags.slice(0, 50));
     } catch (error) {
       console.error("Error fetching categories:", error);
