@@ -128,7 +128,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
-**Rahul Kumar** - [LinkedIn](https://www.linkedin.com/in/captxrahul/) - [rahulkumar@email.com](mailto:captainakash1675@gmail.com)
+**Rahul Kumar** - [LinkedIn](https://www.linkedin.com/in/captxrahul/) - [Email](mailto:captainakash1675@gmail.com)
 Project Link: [https://github.com/your-username/food-product-explorer](https://github.com/DeF4lt-Cap10N/FoodApp-Assignment)
 
 ## Acknowledgments
