@@ -13,9 +13,8 @@ function App() {
   const [loader, setLoader] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [searchTerm, setSearchTerm] = useState(""); // To preserve search context
+  const [searchTerm, setSearchTerm] = useState(""); 
 
-  // Fetch Products
   const fetchData = async (name = "", pageNum = 1) => {
     setLoader(true);
     try {
@@ -33,14 +32,14 @@ function App() {
 
       setHasMore(fetchedProducts.length > 0);
       setPage(pageNum);
-      setSearchTerm(name); // Save the search term
+      setSearchTerm(name); 
     } catch (error) {
       console.error("Error fetching products:", error);
     }
     setLoader(false);
   };
 
-  // Barcode Search
+  // Barcode 
   const searchByBarcode = async (barcode) => {
     try {
       setLoader(true);
@@ -60,7 +59,7 @@ function App() {
     setLoader(false);
   };
 
-  // Category Filter
+  // Category 
   const fetchByCategory = async (categoryId) => {
     const category = categoryId.replace("en:", "");
     try {
@@ -69,7 +68,7 @@ function App() {
         `https://thingproxy.freeboard.io/fetch/https://world.openfoodfacts.org/category/${category}.json`
       );
       setProducts(res.data.products);
-      setHasMore(false); // No pagination for this endpoint
+      setHasMore(false); 
     } catch (error) {
       console.error("Error fetching products by category:", error);
     }
@@ -77,13 +76,14 @@ function App() {
   };
 
   useEffect(() => {
-    fetchData(); // Load initial products
+    fetchData(); 
   }, []);
 
-  // Infinite Scroll Logic
+  
   const observer = useRef();
+
   const lastProductRef = useCallback(
-    (node) => {
+    (e) => {
       if (loader) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
@@ -91,12 +91,12 @@ function App() {
           fetchData(searchTerm, page + 1);
         }
       });
-      if (node) observer.current.observe(node);
+      if (e) observer.current.observe(e);
     },
     [loader, hasMore, page, searchTerm]
   );
 
-  // Sorting Logic
+ 
   let sortedProducts = [...products];
   if (sortType === "name-asc") {
     sortedProducts.sort((a, b) =>
