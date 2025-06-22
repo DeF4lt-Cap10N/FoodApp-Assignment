@@ -13,7 +13,7 @@ function App() {
   const [loader, setLoader] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = async (name = "", pageNum = 1) => {
     setLoader(true);
@@ -39,7 +39,6 @@ function App() {
     setLoader(false);
   };
 
-  // Barcode 
   const searchByBarcode = async (barcode) => {
     try {
       setLoader(true);
@@ -59,25 +58,28 @@ function App() {
     setLoader(false);
   };
 
-  // Category 
- const fetchByCategory = async (categoryId) => {
-  const category = categoryId.replace("en:", "");
-  try {
-    setLoader(true);
-    const res = await axios.get(`/api/productsByCategory?category=${category}`);
-    setProducts(res.data.products);
-    setHasMore(false); 
-  } catch (error) {
-    console.error("Error fetching products by category:", error);
-  }
-  setLoader(false);
-};
+  const fetchByCategory = async (categoryId) => {
+    const category = categoryId.replace("en:", "");
+    try {
+      setLoader(true);
+      const res = await axios.get(
+        `https://world.openfoodfacts.org/category/${category}.json`
+      );
+      setProducts(res.data.products);
+      setHasMore(false); 
+    } catch (error) {
+      console.error("Error fetching products by category:", error);
+    }
+    setLoader(false);
+  };
 
-  
+  useEffect(() => {
+    fetchData(); 
+  }, []);
+
   const observer = useRef();
-
   const lastProductRef = useCallback(
-    (e) => {
+    (node) => {
       if (loader) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
@@ -85,12 +87,11 @@ function App() {
           fetchData(searchTerm, page + 1);
         }
       });
-      if (e) observer.current.observe(e);
+      if (node) observer.current.observe(node);
     },
     [loader, hasMore, page, searchTerm]
   );
 
- 
   let sortedProducts = [...products];
   if (sortType === "name-asc") {
     sortedProducts.sort((a, b) =>

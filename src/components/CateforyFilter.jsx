@@ -4,21 +4,24 @@ import axios from "axios";
 const CategoryFilter = ({ onSelectCategory }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-useEffect(() => {
-  const fetchCategories = async () => {
-    try {
-      const res = await axios.get("/api/categories");
-      setCategories(res.data.tags.slice(0, 50));
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  fetchCategories();
-}, []);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res =await axios.get("https://corsproxy.io/?https://world.openfoodfacts.org/categories.json");
+
+        const categories = res.data.tags?.slice(0, 10) || [];
+
+        setCategories(categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <div className="mb-6">
